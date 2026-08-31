@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'none';">
+<title>Noticias — Centro Educativo Nuestra Señora de las Mercedes</title>
+<meta name="description" content="Noticias y actualidad del Centro Educativo Nuestra Señora de las Mercedes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Inter:wght@400;500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/jpeg" href="LOGO/logo.jpg">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: { DEFAULT:'#1E3A8A', 50:'#EEF2FF', 800:'#16296B', 900:'#101B4D' },
+          brand:{ DEFAULT:'#6D28D9', 700:'#5B21B6', 50:'#F5F0FF' },
+          ink: '#20222E',
+          cream: '#F6F5FB'
+        },
+        fontFamily: {
+          serif: ['Fraunces','ui-serif','Georgia','serif'],
+          sans: ['Inter','Helvetica','ui-sans-serif','sans-serif'],
+          script: ['Caveat','cursive']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html, body { overflow-x: hidden; }
+  html { scroll-behavior: smooth; max-width: 100vw; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  body { font-family: 'Inter', 'Helvetica', sans-serif; font-weight: 450; color: #20222E; background: #EFEAE0; }
+  h1, h2, h3, .font-serif { font-family: 'Fraunces', Georgia, serif; font-weight: 700; }
+
+  .paper-texture {
+    background-color: #EFEAE0;
+    background-image:
+      radial-gradient(ellipse 900px 550px at 8% 10%, rgba(101,79,53,0.05), transparent 60%),
+      radial-gradient(ellipse 800px 650px at 92% 30%, rgba(101,79,53,0.045), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 20% 85%, rgba(101,79,53,0.05), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 80% 95%, rgba(101,79,53,0.04), transparent 65%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.28 0 0 0 0 0.22 0 0 0 0 0.14 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: auto, auto, auto, auto, 260px 260px;
+  }
+
+  .ribbon { clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%); }
+
+  .ease-spring { transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .ease-out-expo { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 650ms cubic-bezier(0.16,1,0.3,1), transform 650ms cubic-bezier(0.16,1,0.3,1); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  .card-lift { transition: transform 240ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 240ms cubic-bezier(0.16,1,0.3,1); }
+  .card-lift:hover { transform: translateY(-5px); }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #6D28D9; outline-offset: 2px;
+  }
+
+  /* Mega menu */
+  .mega-item { position: relative; }
+  .mega-panel {
+    position: absolute; top: 100%; left: 0; min-width: 240px;
+    background: rgba(16,27,77,0.97);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity 220ms cubic-bezier(0.16,1,0.3,1), transform 220ms cubic-bezier(0.16,1,0.3,1), visibility 220ms;
+    z-index: 50;
+  }
+  .mega-item:hover .mega-panel,
+  .mega-item:focus-within .mega-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+  .mega-panel a { display: block; }
+
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 50%; bottom: -3px; width: 0; height: 2px;
+    background: #6D28D9; transition: width 220ms cubic-bezier(0.16,1,0.3,1), left 220ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .nav-link:hover::after { width: 100%; left: 0; }
+  .nav-link.active-link { color: #6D28D9; }
+  .nav-link.active-link::after { width: 100%; left: 0; }
+
+  .mobile-menu { transition: transform 320ms cubic-bezier(0.16,1,0.3,1), opacity 320ms cubic-bezier(0.16,1,0.3,1); }
+  .accordion-panel { max-height: 0; overflow: hidden; transition: max-height 320ms cubic-bezier(0.16,1,0.3,1); }
+  .accordion-panel.open { max-height: 480px; }
+
+  .whatsapp-pulse::before {
+    content: ''; position: absolute; inset: 0; border-radius: 9999px; background: #25D366;
+    animation: pulseRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite;
+  }
+  @keyframes pulseRing { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.9); opacity: 0; } }
+
+  ::selection { background: #6D28D9; color: #ffffff; }
+</style>
+</head>
+<body class="antialiased paper-texture">
+
+<!-- TOP BAR -->
+<div class="h-[6px] bg-brand"></div>
+
+<!-- HEADER -->
+<header id="site-header" class="relative paper-texture">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 relative">
+    <!-- Ribbon logo (desktop) -->
+    <a href="index.html#inicio" class="hidden lg:block absolute left-6 lg:left-10 top-0 z-20 group">
+      <div class="ribbon w-[150px] h-[190px] bg-gradient-to-b from-navy to-navy-900 flex flex-col items-center pt-6 shadow-[0_10px_25px_rgba(30,58,138,0.35)] ease-spring transition-transform duration-300 group-hover:-translate-y-1">
+        <div class="w-24 h-24 rounded-full bg-white p-1 shadow-[0_2px_10px_rgba(0,0,0,0.3)] overflow-hidden shrink-0">
+          <img src="LOGO/logo.jpg" alt="Escudo del Centro Educativo Nuestra Señora de las Mercedes" class="w-full h-full object-cover rounded-full">
+        </div>
+        <span class="text-white/90 text-[13.5px] tracking-wide mt-2 font-serif font-semibold px-2 text-center leading-tight">Centro Educativo<br>Las Mercedes</span>
+      </div>
+    </a>
+
+    <!-- Ribbon logo (mobile, centered in flow) -->
+    <a href="index.html#inicio" class="lg:hidden flex justify-center pt-6 group">
+      <div class="ribbon w-[110px] h-[140px] bg-gradient-to-b from-navy to-navy-900 flex flex-col items-center pt-4 shadow-[0_10px_25px_rgba(30,58,138,0.35)] ease-spring transition-transform duration-300 group-hover:-translate-y-1">
+        <div class="w-16 h-16 rounded-full bg-white p-0.5 shadow-[0_2px_8px_rgba(0,0,0,0.28)] overflow-hidden shrink-0">
+          <img src="LOGO/logo.jpg" alt="Escudo del Centro Educativo Nuestra Señora de las Mercedes" class="w-full h-full object-cover rounded-full">
+        </div>
+        <span class="text-white/90 text-[11.5px] tracking-wide mt-1.5 font-serif font-semibold px-2 text-center leading-tight">Centro Educativo<br>Las Mercedes</span>
+      </div>
+    </a>
+
+    <!-- Nav -->
+    <nav class="hidden lg:flex items-center justify-end gap-7 pt-8 pb-3 pl-[180px] border-b border-dashed border-ink/25">
+      <a href="index.html#inicio" aria-label="Inicio" class="text-brand hover:text-brand-700 transition-colors duration-200 cursor-pointer">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3 2 12h3v8h6v-6h2v6h6v-8h3L12 3Z"/></svg>
+      </a>
+
+      <div class="mega-item">
+        <button class="nav-link flex items-center gap-1 text-[14.5px] font-semibold tracking-wide uppercase text-ink hover:text-brand transition-colors duration-200 cursor-pointer py-2">
+          Nosotros
+          <svg class="w-3 h-3 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7Z"/></svg>
+        </button>
+        <div class="mega-panel py-3">
+          <a href="historia.html" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Nuestra Historia</a>
+          <a href="index.html#mision" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Misión y Visión</a>
+          <a href="index.html#nosotros" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Nuestros Valores</a>
+          <a href="index.html#" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Equipo Directivo</a>
+          <a href="index.html#" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Empleo</a>
+          <a href="index.html#" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Correo Institucional</a>
+          <a href="index.html#contacto" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Contacto</a>
+        </div>
+      </div>
+
+      <div class="mega-item">
+        <a href="admisiones.html" class="nav-link flex items-center gap-1 text-[14.5px] font-semibold tracking-wide uppercase text-ink hover:text-brand transition-colors duration-200 cursor-pointer py-2">
+          Admisiones
+          <svg class="w-3 h-3 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7Z"/></svg>
+        </a>
+        <div class="mega-panel py-3">
+          <a href="admisiones.html#proceso" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Proceso de Admisión</a>
+          <a href="admisiones.html#requisitos" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Requisitos y Documentos</a>
+          <a href="admisiones.html#transferidos" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Estudiantes Transferidos</a>
+          <a href="admisiones.html#faq" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Preguntas Frecuentes</a>
+          <a href="admisiones.html#solicitud" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Solicitar Información</a>
+        </div>
+      </div>
+
+      <div class="mega-item">
+        <a href="niveles.html" class="nav-link flex items-center gap-1 text-[14.5px] font-semibold tracking-wide uppercase text-ink hover:text-brand transition-colors duration-200 cursor-pointer py-2">
+          Niveles
+          <svg class="w-3 h-3 text-brand" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7Z"/></svg>
+        </a>
+        <div class="mega-panel py-3">
+          <a href="niveles.html#inicial" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Educación Inicial</a>
+          <a href="niveles.html#primaria" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Educación Primaria</a>
+          <a href="niveles.html#secundaria" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Educación Secundaria</a>
+          <a href="niveles.html#extracurricular" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Programa Extracurricular</a>
+          <a href="niveles.html#valores" class="px-5 py-2.5 text-white/90 hover:text-white hover:bg-white/5 font-serif text-[15px] transition-colors duration-150">Programa de Valores</a>
+        </div>
+      </div>
+
+      <a href="index.html#galeria" class="nav-link text-[14.5px] font-semibold tracking-wide uppercase text-ink hover:text-brand transition-colors duration-200 py-2 cursor-pointer">Galería</a>
+      <a href="noticias.html" class="nav-link active-link text-[14.5px] font-semibold tracking-wide uppercase text-brand transition-colors duration-200 py-2 cursor-pointer">Noticias</a>
+      <a href="index.html#porque" class="nav-link text-[14.5px] font-semibold tracking-wide uppercase text-ink hover:text-brand transition-colors duration-200 py-2 cursor-pointer">¿Por Qué Elegirnos?</a>
+    </nav>
+
+    <!-- Mobile toggle -->
+    <button id="menu-toggle" class="lg:hidden absolute right-4 top-4 flex items-center justify-center w-11 h-11 rounded-full text-ink hover:bg-ink/5 transition-colors duration-200 cursor-pointer z-20" aria-label="Abrir menú" aria-expanded="false">
+      <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+
+    <!-- Breadcrumb / page title -->
+    <div class="reveal text-center pt-6 pb-10 lg:pt-8 pl-0 lg:pl-[70px]">
+      <p class="text-[12.5px] tracking-[0.14em] uppercase text-ink/45">
+        <a href="index.html" class="hover:text-brand transition-colors duration-200">Inicio</a> <span class="mx-1.5">/</span> Noticias
+      </p>
+      <h1 class="font-serif text-4xl sm:text-5xl text-ink mt-2">Noticias</h1>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="mobile-menu lg:hidden fixed inset-x-0 top-0 bottom-0 bg-navy-900 origin-top opacity-0 pointer-events-none -translate-y-4 overflow-y-auto z-50">
+    <div class="flex items-center justify-between px-6 h-20 border-b border-white/10">
+      <span class="font-serif font-semibold text-white text-lg">Centro Educativo Las Mercedes</span>
+      <button id="menu-close" class="flex items-center justify-center w-11 h-11 rounded-full text-white hover:bg-white/10 transition-colors duration-200 cursor-pointer" aria-label="Cerrar menú">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="flex flex-col px-6 pt-4 pb-10">
+      <a href="index.html#inicio" class="mobile-link py-4 border-b border-white/10 text-white text-lg font-serif">Inicio</a>
+
+      <button class="accordion-toggle flex items-center justify-between py-4 border-b border-white/10 text-white text-lg font-serif w-full text-left cursor-pointer">
+        Nosotros
+        <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="accordion-panel">
+        <a href="historia.html" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Nuestra Historia</a>
+        <a href="index.html#mision" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Misión y Visión</a>
+        <a href="index.html#nosotros" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Nuestros Valores</a>
+        <a href="index.html#contacto" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Contacto</a>
+      </div>
+
+      <a href="admisiones.html" class="mobile-link py-4 border-b border-white/10 text-white text-lg font-serif">Admisiones</a>
+
+      <button class="accordion-toggle flex items-center justify-between py-4 border-b border-white/10 text-white text-lg font-serif w-full text-left cursor-pointer">
+        Niveles
+        <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="accordion-panel">
+        <a href="niveles.html#inicial" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Educación Inicial</a>
+        <a href="niveles.html#primaria" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Educación Primaria</a>
+        <a href="niveles.html#secundaria" class="mobile-link block py-3 pl-4 text-white/70 font-serif">Educación Secundaria</a>
+      </div>
+
+      <a href="index.html#galeria" class="mobile-link py-4 border-b border-white/10 text-white text-lg font-serif">Galería</a>
+      <a href="noticias.html" class="mobile-link py-4 border-b border-white/10 text-brand text-lg font-serif">Noticias</a>
+      <a href="index.html#porque" class="mobile-link py-4 border-b border-white/10 text-white text-lg font-serif">¿Por Qué Elegirnos?</a>
+    </nav>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="relative max-w-4xl mx-auto px-6 lg:px-10 mt-8 text-center">
+  <p class="reveal text-ink/65 text-[15.5px] leading-relaxed">
+    Mantente al día con la actualidad del Centro Educativo Nuestra Señora de las Mercedes.
+  </p>
+</section>
+
+<!-- NEWS GRID -->
+<section class="relative max-w-6xl mx-auto px-6 lg:px-10 mt-14">
+  <div class="grid sm:grid-cols-2 gap-8">
+    <a href="admisiones.html" class="reveal card-lift bg-white border border-ink/15 p-7 flex items-start gap-4 shadow-[0_2px_10px_rgba(32,34,46,0.06)]">
+      <div class="shrink-0 w-14 text-center">
+        <div class="border-2 border-brand text-brand font-serif text-2xl leading-none py-2">15</div>
+        <div class="font-serif italic text-ink/50 text-sm mt-1">Sep</div>
+      </div>
+      <div>
+        <h2 class="font-serif text-navy text-[19px] leading-snug group-hover:text-brand">Inicio del año escolar 2026-2027</h2>
+        <p class="text-ink/60 text-[14px] mt-2 leading-relaxed">Damos la bienvenida al nuevo año escolar. El proceso de admisión permanece abierto durante todo el año, sujeto a disponibilidad de cupos.</p>
+      </div>
+    </a>
+
+    <a href="admisiones.html" class="reveal card-lift bg-white border border-ink/15 p-7 flex items-start gap-4 shadow-[0_2px_10px_rgba(32,34,46,0.06)]">
+      <div class="shrink-0 w-14 text-center">
+        <div class="border-2 border-navy text-navy font-serif text-2xl leading-none py-2">01</div>
+        <div class="font-serif italic text-ink/50 text-sm mt-1">Todo el año</div>
+      </div>
+      <div>
+        <h2 class="font-serif text-navy text-[19px] leading-snug">Proceso de admisión abierto</h2>
+        <p class="text-ink/60 text-[14px] mt-2 leading-relaxed">Aceptamos solicitudes de estudiantes nuevos y transferidos durante todo el año escolar. Conoce los requisitos y el proceso completo.</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Empty state -->
+  <div class="reveal mt-10 bg-brand-50 border border-brand/20 p-10 text-center">
+    <svg class="w-10 h-10 text-brand/50 mx-auto" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5.5C4 4.7 4.7 4 5.5 4h9L20 8.5V18.5c0 .8-.7 1.5-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5v-13Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M14 4v4.5H20M8 12.5h8M8 15.5h5"/></svg>
+    <h2 class="font-serif text-navy text-xl mt-4">Más noticias próximamente</h2>
+    <p class="text-ink/60 text-[14.5px] mt-2 max-w-md mx-auto leading-relaxed">Estamos preparando el contenido de esta sección. Mientras tanto, síguenos en redes sociales para conocer las novedades del centro al momento.</p>
+    <div class="mt-6 flex items-center justify-center gap-3">
+      <a href="https://instagram.com/centroeducativolasmercedes" target="_blank" rel="noopener" class="inline-flex items-center gap-2 border-2 border-brand text-brand hover:bg-brand hover:text-white font-serif text-[14px] px-5 py-2.5 ease-out-expo transition-all duration-250 cursor-pointer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2.1.26 2.6.46.6.24 1.1.55 1.6 1.05.5.5.8 1 1 1.6.2.6.4 1.4.5 2.6.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.5 2.6-.2.6-.5 1.1-1 1.6-.5.5-1 .8-1.6 1a7 7 0 0 1-2.6.5c-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1a7 7 0 0 1-2.6-.5c-.6-.2-1.1-.5-1.6-1-.5-.5-.8-1-1-1.6a7 7 0 0 1-.5-2.6C2.3 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-2 .5-2.6.2-.6.5-1.1 1-1.6.5-.5 1-.8 1.6-1 .5-.2 1.4-.4 2.6-.5C9.4 2.2 9.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1 .05-1.6.22-2 .37-.5.2-.8.4-1.2.8-.4.4-.6.7-.8 1.2-.15.4-.3 1-.4 2-.05 1.2-.06 1.6-.06 4.7s0 3.5.06 4.7c.05 1 .2 1.6.4 2 .2.5.4.8.8 1.2.4.4.7.6 1.2.8.4.15 1 .3 2 .4 1.2.05 1.6.06 4.7.06s3.5 0 4.7-.06c1-.05 1.6-.2 2-.4.5-.2.8-.4 1.2-.8.4-.4.6-.7.8-1.2.15-.4.3-1 .4-2 .05-1.2.06-1.6.06-4.7s0-3.5-.06-4.7c-.05-1-.2-1.6-.4-2-.2-.5-.4-.8-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.15-1-.3-2-.4-1.2-.05-1.6-.06-4.7-.06Zm0 3.6a5.4 5.4 0 1 1 0 10.8 5.4 5.4 0 0 1 0-10.8Zm0 1.8a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2Zm5.6-1.98a1.26 1.26 0 1 1-2.52 0 1.26 1.26 0 0 1 2.52 0Z"/></svg>
+        Instagram
+      </a>
+      <a href="https://facebook.com/Centroeducativolasmercedes" target="_blank" rel="noopener" class="inline-flex items-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white font-serif text-[14px] px-5 py-2.5 ease-out-expo transition-all duration-250 cursor-pointer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.5V4.34C16.24 4.3 15.34 4.22 14.3 4.22c-2.14 0-3.6 1.3-3.6 3.7V10.5H8.2v3h2.5V21h2.8Z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#161337] pt-7 pb-24 sm:pb-7 mt-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex flex-col sm:flex-row items-center justify-between gap-4 lg:!pr-44">
+    <p class="text-white/60 text-[13.5px] font-serif">
+      Centro Educativo Nuestra Señora de las Mercedes &copy; 2026 | <a href="index.html#" class="text-brand hover:text-white transition-colors duration-200">Política de Privacidad</a>
+    </p>
+    <div class="flex items-center gap-4">
+      <span class="text-white/50 text-[13px] font-serif tracking-wide uppercase">Síguenos</span>
+      <a href="https://facebook.com/Centroeducativolasmercedes" target="_blank" rel="noopener" aria-label="Facebook" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand text-white flex items-center justify-center transition-colors duration-200 cursor-pointer">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.5V4.34C16.24 4.3 15.34 4.22 14.3 4.22c-2.14 0-3.6 1.3-3.6 3.7V10.5H8.2v3h2.5V21h2.8Z"/></svg>
+      </a>
+      <a href="https://instagram.com/centroeducativolasmercedes" target="_blank" rel="noopener" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand text-white flex items-center justify-center transition-colors duration-200 cursor-pointer">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2.1.26 2.6.46.6.24 1.1.55 1.6 1.05.5.5.8 1 1 1.6.2.6.4 1.4.5 2.6.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 2-.5 2.6-.2.6-.5 1.1-1 1.6-.5.5-1 .8-1.6 1a7 7 0 0 1-2.6.5c-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1a7 7 0 0 1-2.6-.5c-.6-.2-1.1-.5-1.6-1-.5-.5-.8-1-1-1.6a7 7 0 0 1-.5-2.6C2.3 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-2 .5-2.6.2-.6.5-1.1 1-1.6.5-.5 1-.8 1.6-1 .5-.2 1.4-.4 2.6-.5C9.4 2.2 9.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1 .05-1.6.22-2 .37-.5.2-.8.4-1.2.8-.4.4-.6.7-.8 1.2-.15.4-.3 1-.4 2-.05 1.2-.06 1.6-.06 4.7s0 3.5.06 4.7c.05 1 .2 1.6.4 2 .2.5.4.8.8 1.2.4.4.7.6 1.2.8.4.15 1 .3 2 .4 1.2.05 1.6.06 4.7.06s3.5 0 4.7-.06c1-.05 1.6-.2 2-.4.5-.2.8-.4 1.2-.8.4-.4.6-.7.8-1.2.15-.4.3-1 .4-2 .05-1.2.06-1.6.06-4.7s0-3.5-.06-4.7c-.05-1-.2-1.6-.4-2-.2-.5-.4-.8-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.15-1-.3-2-.4-1.2-.05-1.6-.06-4.7-.06Zm0 3.6a5.4 5.4 0 1 1 0 10.8 5.4 5.4 0 0 1 0-10.8Zm0 1.8a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2Zm5.6-1.98a1.26 1.26 0 1 1-2.52 0 1.26 1.26 0 0 1 2.52 0Z"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button id="scroll-top" aria-label="Volver arriba" class="fixed bottom-6 right-24 z-40 w-11 h-11 bg-[#161337] text-white flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 cursor-pointer">
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+</button>
+
+<!-- WhatsApp floating button -->
+<a href="https://wa.me/18297613994" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp"
+  class="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] text-white ease-spring transition-transform duration-250 hover:scale-110 cursor-pointer">
+  <span class="whatsapp-pulse absolute inset-0"></span>
+  <svg class="relative w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.85 9.85 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.92 0-2.65-1.03-5.14-2.91-7.02A9.87 9.87 0 0 0 12.04 2m0 1.67c2.24 0 4.34.87 5.92 2.45a8.23 8.23 0 0 1 2.42 5.79c0 4.55-3.7 8.25-8.35 8.25a8.3 8.3 0 0 1-4.22-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.27-4.38c0-4.55 3.7-8.25 8.29-8.25M8.5 6.86c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.35.99 2.51c.12.16 1.7 2.72 4.19 3.71 2.07.82 2.49.66 2.94.62.45-.04 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.45-.71-1.67-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.35-.76-1.84-.2-.48-.4-.42-.55-.42Z"/></svg>
+</a>
+
+<script>
+(function () {
+  // Mobile menu
+  var toggle = document.getElementById('menu-toggle');
+  var closeBtn = document.getElementById('menu-close');
+  var menu = document.getElementById('mobile-menu');
+  var iconOpen = document.getElementById('icon-open');
+  var iconClose = document.getElementById('icon-close');
+  var isOpen = false;
+  function setMenu(open) {
+    isOpen = open;
+    toggle.setAttribute('aria-expanded', String(open));
+    if (open) {
+      menu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4');
+      iconOpen.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      menu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+  toggle.addEventListener('click', function () { setMenu(!isOpen); });
+  closeBtn.addEventListener('click', function () { setMenu(false); });
+  document.querySelectorAll('.mobile-link').forEach(function (a) {
+    a.addEventListener('click', function () { setMenu(false); });
+  });
+
+  // Mobile accordions
+  document.querySelectorAll('.accordion-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var panel = btn.nextElementSibling;
+      var isOpenPanel = panel.classList.contains('open');
+      document.querySelectorAll('.mobile-menu .accordion-panel.open').forEach(function (p) {
+        p.classList.remove('open');
+        p.previousElementSibling.querySelector('svg').style.transform = '';
+      });
+      if (!isOpenPanel) {
+        panel.classList.add('open');
+        btn.querySelector('svg').style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+
+  // Reveal on scroll
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(function (el) { io.observe(el); });
+
+  // Scroll to top button
+  var scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 500) {
+      scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+    } else {
+      scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
+    }
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+
+</body>
+</html>
